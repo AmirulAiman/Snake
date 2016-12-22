@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>HTML Canvas</title>
+	</head>
+	<style>
+		canvas{
+			border: 1px solid #000000;
+		}
+	</style>
+	<script>
+		
+		var c; 
+		var ctx;
+		
+		function init(){
+			c = document.getElementById("myCanvas");
+			ctx = c.getContext("2d");
+			draw();
+		}
+		
+		function draw(){
+			var posX = 0;
+			var posY = 0;
+			
+			//setInterval -> do 'a' with 't' delay
+			setInterval(/*do*/function(){
+			
+				posX += 1;
+				posY += 1;
+				
+				//Color the background.
+				ctx.fillStyle = "black";
+				ctx.fillRect(0,0,c.width,c.height);
+				
+				//create circle#1
+				ctx.fillStyle = "white";
+				ctx.beginPath();
+				//arc() -> produce circle and animate.
+				//from x-position,y-position,radius , radius, start angle(rad), end angle(rad) 
+				ctx.arc(posX,120,55,0,Math.PI * 2);
+				ctx.fill();
+				
+				//create circle#2
+				ctx.fillStyle = "blue";
+				ctx.beginPath();
+				//arc() -> produce circle and animate.
+				//from x-position,y-position,radius , radius, start angle(rad), end angle(rad) 
+				ctx.arc(posX,posY,30,0,Math.PI * 2);
+				ctx.fill();
+				//create circle#3
+				ctx.fillStyle = "red";
+				ctx.beginPath();
+				//arc() -> produce circle and animate.
+				//from x-position,y-position,radius , start angle(rad), end angle(rad) 
+				ctx.arc(350,posY,38,0,Math.PI * 2);
+				ctx.fill();
+				
+				
+			},/*speed*/30);
+		}
+		
+	</script>
+	<body onload="init()">
+		<canvas id="myCanvas" width="600" height="400">
+			<p>Sorry, this browser does not support canvas.</p>
+		</canvas>			
+	</body>
+</html>

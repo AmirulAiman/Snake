@@ -7,7 +7,17 @@
 	<body onload="init()">
 		<div class="container">
 			<div id="overlay" >
-				Your Final Score : 
+				Your Final Score : <span id="final_score" ></span>
+				<br>
+				<a onclick="window.location.reload()" href=#>Click to Play Again</a>
+			</div>
+			<canvas id="snakeCanvas" width="600" height="400">
+				Sorry, this browser does not support canvas element.
+			</canvas>
+			<div id="stat">
+				<div id="score"></div>
+				<div id="high_score"></div>
+				<button onclick="resetScore" id="reset_score">Reset Score</button>
 			</div>
 		</div>
 	</body>

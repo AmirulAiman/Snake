@@ -17,6 +17,7 @@ $(document).ready(function(){
 	//Init
 	function init()
 	{
+		d = "right";
 		create_snake();
 		create_food();
 		score = 0;
@@ -63,19 +64,23 @@ $(document).ready(function(){
 		var nx = snake_array[0].x;
 		var ny = snake_array[0].y;
 		
-		if(d = "right")
+		if(d == "right")
 			nx++;
-		else if(d = "left")
+		else if(d == "left")
 			nx--;
-		else if(d = "up")
+		else if(d == "up")
 			ny--;
-		else if(d = "down")
+		else if(d == "down")
 			ny++;
 		
 		//Collision check
 		if(nx == -1 || nx == w/cw || ny == -1 || ny == h/cw || check_collision(nx, ny, snake_array))
 		{
-			init();
+			//Insert score in the div(id : final_score)
+			$('#final_score').html(score);
+			
+			//show div(id : overlay)
+			$('#overlay').fadeIn(300);
 			return;
 		}
 		
@@ -108,6 +113,9 @@ $(document).ready(function(){
 		//check score
 		checkscore(score);
 		
+		//Display current score in div(id : curr_score)
+		$('#curr_score').html('Your Score:' + score);
+		
 	}
 	
 	function paint_cell(x, y)
@@ -127,4 +135,48 @@ $(document).ready(function(){
 		}
 		return false;
 	}
+	function checkscore(score)
+	{
+		//call local storage var
+		if(localStorage.getItem("highScore") === null)
+		{
+			//if no highScore
+			localStorage.setItem('highScore',score);
+		}
+		else
+		{
+			//if highScore exist
+			if(score > localStorage.getItem('highScore'))
+			{
+				localStorage.setItem('highScore',score);
+			}
+		}
+		
+		$('#high_score').html('High Score: '+localStorage.highScore);
+	}
+	//Keyboard controllers
+	$(document).keydown(function(e){
+		var key = e.which;
+		/*
+			37 - right arrow key.
+		*/
+		if(key == "37" && d != "right")
+			d = "left";
+		else if(key == "38" && d!= "down")
+			d = "up";
+		else if(key == "39" && d!= "left")
+			d = "right";
+		else if(key == "40" && d!="up")
+			d = "down";
+	});
+	
+	
 });
+
+function resetScore()
+{
+	localStorage.highScore = 0;
+	//Display highScore
+	var highScoreDiv = document.getElementById('high_score');
+	highScoreDiv.innerHTML = "High Score: 0";
+}
